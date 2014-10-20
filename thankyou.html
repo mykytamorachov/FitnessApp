@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<head>
+	<link rel="stylesheet" href="css/bootstrap.min.css">
+	<link rel="stylesheet" href="css/bootstrap-theme.min.css">
+	<link rel="stylesheet" href="css/question_style.css">
+	<link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+	<script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+	<script src="js/bootstrap.min.js"></script>
+	<script src="js/velocity.js"></script>
+	<script src="js/velocity.ui.js"></script>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ladda-bootstrap/0.1.0/ladda-themeless.min.css">
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/ladda-bootstrap/0.1.0/spin.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/ladda-bootstrap/0.1.0/ladda.min.js"></script>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>Опросник</title>
+</head>
+<body>
+	<header>
+		<div class="container text-left">
+			<div class="name">
+				<span>ALL</span>
+				<span>available</span>
+				<span>UNITS</span>
+			</div>
+			<div class="dropdown col-centered">
+			  <button class=" col-centered language open dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown">
+			    ru
+			    <span class="caret"></span>
+			  </button>
+			  <ul class="dropdown-menu col-centered" role="menu" aria-labelledby="dropdownMenu1">
+			    <li role="presentation"><a role="menuitem" tabindex="-1">ua</a></li>
+			    <li role="presentation"><a role="menuitem" tabindex="-1">us</a></li>
+			    <li role="presentation"><a role="menuitem" tabindex="-1">ru</a></li>
+			  </ul>
+			</div>
+		</div>
+	</header>
+	<content>
+		<div class="container">
+			<h2 class = "space">Вселенная в восторге!</h2>
+			<div class="thankyou">
+				<p>Спасибо, друг, за ценнейший вклад в наши анализы! С твоей помощью мы изменим мир.</p>
+				<p>Хорошая новость в том, что скоро здесь будет замечательная статистика, с которой ты сможешь ознакомиться.</p>
+				<p>Для этого нужно оставить адрес почтого ящика.</p>
+			</div>
+			<form class="email" action="">
+				<input type="email">
+				<button type="submit">Да, согласен</button>
+			</form>
+			<div class="policy">
+				<p>Со своей стороны мы обещаем:</p>
+				<p>— Выслать уведомление о публикации статистики</p>
+				<p>— Никакого спама и без хуйни</p>
+				<p>— Адресс почтового ящика не огласится третей стороне</p>
+			</div>
+		</div>
+	</content>
+	<footer>
+		<div class="container">
+			<p>Allavailableunits © 2014. All rights reserved. Правильных ответов не существует.</p>
+			<p><span class="text-danger">Warning: </span>Для школьников, ваша оригинальность нас не удивит, по-этому не ебите себе и нам мозг.</p>
+		</div>
+	</footer>
+</body>
+<script>
+	$('quest_form').velocity("transition.slideDownBigIn", 500)
+	Ladda.bind( 'input[type=submit]' );
+	$('form button').click(function(e){
+		e.preventDefault()
+		var l = Ladda.create(this);
+	 	l.start();
+	 	l.setProgress( 0.5 );
+
+// Stop loading
+l.stop();
+		// if($(this).parent().next().length>0)
+		// {
+		// 	$(this).parent().velocity("transition.slideDownBigOut", 500)
+		// 	$(this).parent().next('form').removeClass('hidden')
+		// }
+		// else
+		// {
+		// 	window.open('thankyou.html','_self');
+		// }
+	})
+
+</script>

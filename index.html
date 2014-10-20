@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<head>
+	<link rel="stylesheet" href="css/style.css">
+	<link rel="stylesheet" href="css/bootstrap.min.css">
+	<link rel="stylesheet" href="css/bootstrap-theme.min.css">
+	<link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+
+	<script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+	<script src="js/bootstrap.min.js"></script>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>Опросник</title>
+</head>
+<body>
+	<header>
+		<div class="name">
+			<span>ALL</span>
+			<span>available</span>
+			<span>UNITS</span>
+		</div>
+	</header>
+	<content>
+		<div class="container">
+			<div class="post col-centered">
+				<p class="heading">Что это?</p>
+  				<p class="text">Опрос, для анализа движух во вселенной.
+					Вы уже его проходите.</p>
+			</div>
+			<div class="post col-centered">
+				<p class="heading">Зачем это?</p>
+  				<p class="text">Абсолютно для прикола.</p>
+			</div>
+			<div class="post col-centered">
+				<p class="heading">33 249 человек</p>
+  				<p class="text">Уже вложили свой вклад.</p>
+			</div>
+			<div class="post col-centered">
+				<p class="heading">Что спрашивают?</p>
+  				<p class="text">Метафизику, готов?</p>
+			</div>
+  			<button type="button" class="start col-centered">Начать</button>
+  			<button type="button" class="yes col-centered">Да</button>
+
+  			<div class="dropdown col-centered">
+			  <button class=" col-centered language open dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown">
+			    ru
+			    <span class="caret"></span>
+			  </button>
+			  <ul class="dropdown-menu col-centered" role="menu" aria-labelledby="dropdownMenu1">
+			    <li role="presentation"><a role="menuitem" tabindex="-1">ua</a></li>
+			    <li role="presentation"><a role="menuitem" tabindex="-1">us</a></li>
+			    <li role="presentation"><a role="menuitem" tabindex="-1">ru</a></li>
+			  </ul>
+			</div>
+			<script>
+			$('.dropdown-toggle').dropdown();
+			$('.dropdown-menu li').click(function(){
+				console.log();
+				$('.dropdown-toggle').html($(this).text()+' <span class="caret"></span>')
+			})
+			$('.start, .yes').click(function(){
+				window.open('question.html',"_self") 
+			})
+			</script>
+		</div>
+	</content>
+	<footer class="container-fluid text-center">
+		<p class="text">Allavailableunits © 2014. All rights reserved.</p>
+  				<p class="text">Правильных ответов не существует.</p>
+	</footer>
+</body>

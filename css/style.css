@@ -1,0 +1,37 @@
+
+header {background-color: #252525; height: 234px;}
+header div{font-size: 31px; padding-top: 181px; color:#fff; font-weight: 300; line-height: 28px; text-transform: uppercase; text-align: center;}
+header div span:nth-child(2){color: #36c4ff; display: inline-block; margin-left: -6px;}
+header div span:nth-child(3){color:#afff01;display: inline-block; margin-left: -7px;}
+body {margin: 0; font-family: 'Open Sans', sans-serif !important;}
+footer {margin-bottom: 25px;}
+footer p {color:  #acacac;
+font-size: 10px; /* Приближение из-за подстановки шрифтов */
+font-weight: 400;
+line-height: 28px;}
+
+.col-centered{
+    float: none; 
+    margin: 0 auto;
+}
+div.post{text-align: center; 
+    width: 300px;
+	height: 60px; margin-top: 40px;}
+p.heading{
+color:  #5a5a5a;
+font-size: 16px; /* Приближение из-за подстановки шрифтов */
+font-weight: 400;
+line-height: 28px; margin: 0;}
+
+p.text{color:  #acacac;
+font-size: 14px; /* Приближение из-за подстановки шрифтов */
+font-weight: 400;
+line-height: 20px; margin: 0;}
+
+.container button {width: 313px;  border: none; margin-top:10px; font-size: 18px; font-weight: 400; line-height: 28px;height: 45px; display: block;}
+button.start { color:  #ffffff; background-color:  #3999c6; margin-top: 52px;}
+button.yes {color:  #414141; background-color:  #e8e8e8;}
+button.language {background-color: transparent; text-transform: uppercase; margin-top: 156px; width: auto;}
+.container .dropdown{ width: 150px; margin-bottom: 25px;}
+.container .dropdown-menu {text-transform: uppercase;min-width: 60px;left: 45px;}
+.container .dropdown-menu ul{}

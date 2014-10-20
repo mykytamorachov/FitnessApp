@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<head>
+	<link rel="stylesheet" href="css/bootstrap.min.css">
+	<link rel="stylesheet" href="css/bootstrap-theme.min.css">
+	<link rel="stylesheet" href="css/question_style.css">
+	<link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+	<script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+	<script src="js/bootstrap.min.js"></script>
+	<script src="js/velocity.js"></script>
+	<script src="js/velocity.ui.js"></script>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ladda-bootstrap/0.1.0/ladda-themeless.min.css">
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/ladda-bootstrap/0.1.0/spin.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/ladda-bootstrap/0.1.0/ladda.min.js"></script>
+	<script src="js/sweet-alert.min.js"></script> 
+	<link rel="stylesheet" type="text/css" href="css/sweet-alert.css">
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>Опросник</title>
+</head>
+<body>
+	<header>
+		<div class="container text-left">
+			<div class="name">
+				<span>ALL</span>
+				<span>available</span>
+				<span>UNITS</span>
+			</div>
+			<div class="dropdown col-centered">
+			  <button class=" col-centered language open dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown">
+			    ru
+			    <span class="caret"></span>
+			  </button>
+			  <ul class="dropdown-menu col-centered" role="menu" aria-labelledby="dropdownMenu1">
+			    <li role="presentation"><a role="menuitem" tabindex="-1">ua</a></li>
+			    <li role="presentation"><a role="menuitem" tabindex="-1">us</a></li>
+			    <li role="presentation"><a role="menuitem" tabindex="-1">ru</a></li>
+			  </ul>
+			</div>
+		</div>
+	</header>
+	<content>
+		<div class="container">
+			<p class="question_number">Кстати, вопрос: 2 из 6</p>
+			<form id='quest_form' action="" style="display:none;">
+				<div class="qa-block">
+					<!-- <h2>Отвечая от души, не насосала а...?</h2>
+					<input id = "answer1" type="radio" name="answer"><label for="answer1">Подарили</label><br>
+					<input id = "answer2" type="radio" name="answer"><label for="answer2">Насосала</label><br>
+					<input id = "answer3" type="radio" name="answer"><label for="answer3">Извините, что?</label><br>
+					<input id = "answer4" type="radio" name="answer"><label for="answer4">Свой вариант ответа</label><br>
+					<textarea name="" id="" cols="30" rows="10"></textarea> -->
+				</div>
+				<button type="submit" class='ladda-button' data-style="expand-right">Далее <span class="glyphicon glyphicon-chevron-right ladda-label"></span></button>
+			</form>
+		</div>
+	</content>
+	<footer>
+		<div class="container">
+			<p>Allavailableunits © 2014. All rights reserved. Правильных ответов не существует.</p>
+			<p><span class="text-danger">Warning: </span>Для школьников, ваша оригинальность нас не удивит, по-этому не ебите себе и нам мозг.</p>
+		</div>
+	</footer>
+</body>
+<script>
+	var currentQuestionIndex = 0;
+	var questions = null;
+	var ownAnswerLabel = 'Other answer';
+	var loadQuestions = function() {
+		return $.ajax({
+			url: 'controller.php',
+			data: {
+				'action': 'loadQuestions'
+			},
+			dataType:'json',
+			type:'post'
+		});
+	};
+	var submitAnswer = function (q_id, a_id, extra) {
+		return $.ajax({
+			url: 'controller.php',
+			data: {
+				'action': 'submitAnswer',
+				'q_id': q_id,
+				'a_id': a_id,
+				'extra': extra
+			},
+			contentType: "application/json; charset=utf-8",
+			type: 'post'
+		});
+	};
+	var showQuestion = function (data) {
+		var html = '<h2>' + data['q_text'] + '</h2>';
+		for ( var i = 0; i < data.answers.length; i++ ) {
+			html+= '<input id="answer'+ data.answers[i].a_id+'" type="radio" name="answer" value="'+data.answers[i].a_id+'"><label for="answer'+ data.answers[i].a_id+'">'+ data.answers[i].a_text+'</label><br>';
+		}
+		// html+= '<input name="answer" id="extra" type="radio" value="999" /><label for="extra">'+ ownAnswerLabel+'</label><br>';
+		// html+= '<textarea name="own_answer" id="own_answer" cols="30" rows="10"></textarea>';
+		html+= '<input type="hidden" name="question_id" id="question_id" value="'+data['q_id']+'" />';
+		$('#quest_form .qa-block').html(html);
+	};
+	$(document).ready(function() {
+		// $('#quest_form').velocity("transition.slideDownBigIn", 500);
+		loadQuestions()
+			.done(function(data) {
+				if (data.length) {
+					questions = data;
+					showQuestion(questions[currentQuestionIndex]);
+					$('#quest_form').velocity("transition.slideDownBigIn", 800);
+				}
+			});
+		Ladda.bind('input[type=submit]');
+		$('form button').click(function(e) {
+			e.preventDefault();
+			var form = $('#quest_form').get(0);
+			var qid = form.question_id.value;
+			var aid = form.answer.value;
+			var extra = $.trim($('#own_answer').val());
+			if (qid && aid) {
+				if (aid == 999 && extra === '') {
+					swal("Error!", "Please select your answer", "error")
+				} else {
+					var l = Ladda.create(this);
+					l.start();
+					submitAnswer(qid, aid, extra)
+						.done(function() {
+							currentQuestionIndex++;
+							if (currentQuestionIndex < questions.length) {
+								showQuestion(questions[currentQuestionIndex]);
+								l.stop();
+								$('.qa-block').velocity("transition.slideDownBigIn", 800);
+							} else {
+								window.open('thankyou.html', '_self');
+							}
+						});
+				}
+			}
+			else{swal("Error!", "Please select your answer", "error")}
+		})
+	});
+
+			//l.setProgress(0.5);
+
+			// Stop loading
+			//l.stop();
+			// if($(this).parent().next().length>0)
+			// {
+			// 	$(this).parent().velocity("transition.slideDownBigOut", 500)
+			// 	$(this).parent().next('form').removeClass('hidden')
+			// }
+			// else
+			// {
+			// 	window.open('thankyou.html','_self');
+			// }
+	
+
+</script>
